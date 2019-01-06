@@ -12,8 +12,6 @@ typedef union {
 class u32word {
 public:
     u32word() {}
-    u32word(const u32word& other) {}
-    u32word(u32word&& other) noexcept {}
     virtual ~u32word() noexcept {}
 
     friend std::istream& operator>>(std::istream& is, u32word& val);
@@ -21,7 +19,7 @@ public:
     u32word operator+(const u32word& other)
     {
         u32word result = *this;
-        result += other;
+        result.value_.num += other.value_.num;
         return result;
     }
 
@@ -53,11 +51,14 @@ std::ostream& operator<<(std::ostream& os, const u32word& val)
 int main(int argc, char** argv)
 {
     using namespace std;
-    std::stringstream input("ааббввгв");
+    std::stringstream input("aaaaa");
     u32word e;
-    while (cin >> e) {
+    u32word result;
+    while (input >> e) {
         std::cout << std::hex << "0x" << e << std::endl;
+        result = e + result;
     }
+    std::cout << "Checksumm is " << result << std::endl;
     std::cout << std::dec;
     return 0;
 }
