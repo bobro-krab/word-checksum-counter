@@ -30,13 +30,16 @@ private:
 
 std::istream& operator>>(std::istream& is, u32word& val)
 {
-    is.read(val.value_.bytes, 4);
-    if (is) {
-    } else {
-        // TODO: implement reading last bytes
-        // TODO: to read EOF or not?
-        if (is.eof()) {
-            std::cout << "File ends" << std::endl;
+    val.value_.num = 0;
+    for (auto i = 0; i < 4; ++i) {
+        is.read(&val.value_.bytes[i], 1);
+        if (!is) {
+            if (is.fail() && i != 0) {
+                // restore stream only if
+                // can read at least one byte from stream
+                is.clear();
+            }
+            return is;
         }
     }
     return is;
@@ -51,11 +54,10 @@ std::ostream& operator<<(std::ostream& os, const u32word& val)
 int main(int argc, char** argv)
 {
     using namespace std;
-    std::stringstream input("aaaaa");
     u32word e;
     u32word result;
-    while (input >> e) {
-        std::cout << std::hex << "0x" << e << std::endl;
+    while (cin >> e) {
+        std::cout << std::hex << "0x" << setfill('0') << setw(8) << e << std::endl;
         result = e + result;
     }
     std::cout << "Checksumm is " << result << std::endl;
