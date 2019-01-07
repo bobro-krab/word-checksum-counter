@@ -6,8 +6,17 @@ u32word u32word::operator+(const u32word& other)
     return result;
 }
 
+bool u32word::operator ==(const u32word& other) const {
+    return value_.num == other.value_.num;
+}
+
+bool u32word::operator <(const u32word& other) const {
+    return value_.num < other.value_.num;
+}
+
 std::istream& operator>>(std::istream& is, u32word& val)
 {
+    unsigned int old_value = val.value_.num;
     val.value_.num = 0;
     for (auto i = 0; i < 4; ++i) {
         is.read(&val.value_.bytes[i], 1);
@@ -17,6 +26,7 @@ std::istream& operator>>(std::istream& is, u32word& val)
                 // can read at least one byte from stream
                 is.clear();
             }
+            val.value_.num = old_value;
             return is;
         }
     }
