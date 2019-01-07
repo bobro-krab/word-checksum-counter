@@ -26,7 +26,10 @@ std::istream& operator>>(std::istream& is, u32word& val)
                 // can read at least one byte from stream
                 is.clear();
             }
-            val.value_.num = old_value;
+            if (i == 0) {
+                // restore prev value only if can't read at least one byte
+                val.value_.num = old_value;
+            }
             return is;
         }
     }
