@@ -41,3 +41,7 @@ std::ostream& operator<<(std::ostream& os, const u32word& val)
     os << val.value_.num;
     return os;
 }
+
+unsigned int u32word::asUnsignedInt() {
+    return value_.num;
+}

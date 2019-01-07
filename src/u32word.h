@@ -23,6 +23,8 @@ public:
     friend std::istream& operator>>(std::istream& is, u32word& val);
     friend std::ostream& operator<<(std::ostream& os, const u32word& val);
 
+    unsigned int asUnsignedInt();
+
 
 protected:
 private:

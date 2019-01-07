@@ -1,7 +1,7 @@
 #include <getopt.h>
 #include <string>
 
-#include "u32word.h"
+#include "checksum-counter.h"
 #include "word-counter.h"
 
 void printHelp(std::string programm_name) {
@@ -65,6 +65,8 @@ int main(int argc, char** argv)
         break;
     }
     case ProgramModes::checksum: {
+        ChecksumCounter counter(filename);
+        std::cout <<  counter.count_checksum() << "\n";
         break;
     }
     }
