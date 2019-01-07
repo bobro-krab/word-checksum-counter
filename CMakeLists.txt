@@ -5,7 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Debug)
 
-set(SOURCE_FILES src/u32word.cpp)
+set(SOURCE_FILES src/u32word.cpp src/word-counter.cpp)
 
 add_executable(prog src/main.cpp ${SOURCE_FILES})
 
@@ -13,7 +13,7 @@ add_library(Catch2 INTERFACE)
 target_include_directories(Catch2 INTERFACE "third-party/catch2")
 
 enable_testing()
-add_executable(tests ${SOURCE_FILES} tests/test.cpp tests/catch-main.cpp)
+add_executable(tests ${SOURCE_FILES} tests/test.cpp tests/catch-main.cpp tests/test-wordcounter.cpp)
 target_include_directories(tests PRIVATE "src")
 target_link_libraries(tests Catch2)
 add_test(tests tests)

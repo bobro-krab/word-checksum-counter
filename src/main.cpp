@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 
 #include "u32word.h"
+#include "word-counter.h"
 
 int main(int argc, char** argv)
 {
