@@ -27,3 +27,19 @@ TEST_CASE("Test whitespace separators", "[separators]") {
     }
     REQUIRE(counter.getResult() == 5);
 }
+
+TEST_CASE("Test punctuation separators", "[separators]") {
+    std::stringstream input("mother,mother! mother;mother? ");
+    WordCounter counter("mother");
+    while (input >> counter) {
+    }
+    REQUIRE(counter.getResult() == 4);
+}
+
+TEST_CASE("Count only words with separators, not substrings", "[separators]") {
+    std::stringstream input("mother of mother is grandmother");
+    WordCounter counter("mother");
+    while (input >> counter) {
+    }
+    REQUIRE(counter.getResult() == 2);
+}

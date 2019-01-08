@@ -19,6 +19,7 @@ public:
     }
 
 private:
+    size_t countWithSeparators(std::string& chunk);
     size_t count_ = 0;
     std::string word_;
 };
