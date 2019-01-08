@@ -1,26 +1,20 @@
 #include <iostream>
 #include <fstream>
+#include "counter.h"
 #include "u32word.h"
 
-class ChecksumCounter
+class ChecksumCounter: public Counter
 {
 public:
-    ChecksumCounter(std::string filename):filename(filename) {
+    ChecksumCounter() {
     }
-    unsigned int count_checksum() {
-        u32word word, result;
-        std::ifstream input(filename);
-        if(!input) {
-            std::cerr << "Can't open file: " << filename << std::endl;
-        }
-
-        while (input >> word) {
-            result = result + word;
-        }
-        return result.asUnsignedInt();
+    void processOneWordFromStream(std::istream& is);
+    unsigned int getResult() final {
+        return static_cast<unsigned int>(result.asUnsignedInt());
     }
     virtual ~ChecksumCounter() {}
+    friend std::istream& operator>>(std::istream& is, ChecksumCounter& val);
 private:
-    std::string filename;
+    u32word result;
 };
 

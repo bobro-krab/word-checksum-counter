@@ -16,3 +16,13 @@ std::istream& operator>>(std::istream& is, WordCounter& val)
         val.count_++;
     return is;
 }
+
+void WordCounter::processOneWordFromStream(std::istream& is) {
+    std::string word;
+    is >> word;
+    if (!is) {
+        // sdf
+    }
+    if (word == word_)
+        count_++;
+}

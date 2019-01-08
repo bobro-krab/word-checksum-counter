@@ -5,7 +5,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_BUILD_TYPE Debug)
 
-set(SOURCE_FILES src/u32word.cpp src/word-counter.cpp)
+set(SOURCE_FILES src/counter.cpp src/u32word.cpp src/word-counter.cpp src/checksum-counter.cpp)
 
 add_executable(prog src/main.cpp ${SOURCE_FILES})
 

@@ -1,8 +1,9 @@
 #include <getopt.h>
+#include <cstring>
 #include <string>
+#include <iostream>
 
-#include "checksum-counter.h"
-#include "word-counter.h"
+#include "counter-builder.h"
 
 void printHelp(std::string programm_name) {
     std::cout << "Usage: " << programm_name << " <-m words|checksum> <-f filename_to_work_with> [-v]" << std::endl;
@@ -12,7 +13,16 @@ void printHelp(std::string programm_name) {
     std::cout << "2) -m checksum - Calculate checksum for specified file\n";
 }
 
-enum class ProgramModes {no_mode, checksum, words};
+void countFile(std::string filename, Counter& counter) {
+    std::ifstream input(filename);
+    if (!input) {
+        std::cerr << "Error open file " << filename << ": [" << errno << "] " << strerror(errno) << std::endl;
+        return;
+    }
+    while (input >> counter) {
+    }
+    std::cout << "calculated result " << counter.getResult() << std::endl;
+}
 
 int main(int argc, char** argv)
 {
@@ -23,19 +33,17 @@ int main(int argc, char** argv)
         return 0;
     }
 
-    ProgramModes mode = ProgramModes::no_mode;
     string filename;
-    string word_to_count;
+    CounterBuilder builder;
 
     int opt;
     while ((opt = getopt(argc, argv, "m:f:v:h")) != -1) {
         switch (opt) {
         case 'm': {
             if (string(optarg) == "words") {
-                mode = ProgramModes::words;
             }
             if (string(optarg) == "checksum") {
-                mode = ProgramModes::checksum;
+                builder.countChecksumm();
             }
             break;
         }
@@ -45,7 +53,7 @@ int main(int argc, char** argv)
         }
 
         case 'v': {
-            word_to_count = string(optarg);
+            builder.countAWord(optarg);
             break;
         }
 
@@ -56,20 +64,13 @@ int main(int argc, char** argv)
         }
     }
 
-    switch (mode) {
-    case ProgramModes::no_mode: {
+    std::unique_ptr<Counter> counter(builder.build());
+    if (!counter) {
+        std::cerr << "Some flags are missed or misused" << std::endl;
         printHelp(argv[0]);
-        return 0;
+        return EXIT_FAILURE;
     }
-    case ProgramModes::words: {
-        break;
-    }
-    case ProgramModes::checksum: {
-        ChecksumCounter counter(filename);
-        std::cout <<  counter.count_checksum() << "\n";
-        break;
-    }
-    }
+    countFile(filename, (*counter));
 
-    return 0;
+    return EXIT_SUCCESS;
 }

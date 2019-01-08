@@ -9,6 +9,5 @@ TEST_CASE("Test happy path", "[is unchanged]") {
     WordCounter counter("mother");
     while (input >> counter) {
     }
-    std::cout << counter.getCount() << std::endl;
     REQUIRE(counter.getCount() == 2);
 }

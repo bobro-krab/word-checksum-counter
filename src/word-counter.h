@@ -4,16 +4,21 @@
 #include <iostream>
 #include <string>
 
-class WordCounter
+#include "counter.h"
+class WordCounter: public Counter
 {
 public:
     WordCounter(std::string word_to_count);
     virtual ~WordCounter() noexcept = default;
 
     friend std::istream& operator>>(std::istream& is, WordCounter& val);
+    void processOneWordFromStream(std::istream& is);
 
     size_t getCount() const {
         return count_;
+    }
+    unsigned int getResult() final {
+        return static_cast<unsigned int>(count_);
     }
 protected:
 private:
