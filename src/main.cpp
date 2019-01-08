@@ -82,7 +82,7 @@ ProgOptions processArgs(int argc, char** argv)
         options.correct = false;
     }
 
-    if (wordsParam != options.mode && checksumParam == options.mode) {
+    if (wordsParam != options.mode && checksumParam != options.mode) {
         std::cerr << "-m should be 'words' or 'checksum'" << std::endl;
         options.correct = false;
     }
