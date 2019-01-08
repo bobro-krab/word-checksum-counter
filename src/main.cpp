@@ -118,7 +118,7 @@ int main(int argc, char** argv)
         builder.countChecksumm();
     }
 
-    std::unique_ptr<Counter> counter(builder.build());
+    auto counter = builder.build();
     if (!counter) {
         std::cerr << "Some flags are missed or misused" << std::endl;
         return EXIT_FAILURE;

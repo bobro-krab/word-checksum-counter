@@ -27,14 +27,14 @@ public:
         return *this;
     }
 
-    Counter* build()
+    std::unique_ptr<Counter> build()
     {
         switch (mode_) {
         case ProgramModes::words: {
-            return new WordCounter(wordToCount);
+            return std::make_unique<WordCounter>(wordToCount);
         }
         case ProgramModes::checksum: {
-            return new ChecksumCounter();
+            return std::make_unique<ChecksumCounter>();
         }
         case ProgramModes::noMode: {
             return nullptr;
