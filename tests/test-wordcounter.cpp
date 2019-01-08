@@ -9,5 +9,13 @@ TEST_CASE("Test happy path", "[is unchanged]") {
     WordCounter counter("mother");
     while (input >> counter) {
     }
-    REQUIRE(counter.getCount() == 2);
+    REQUIRE(counter.getResult() == 2);
+}
+
+TEST_CASE("Test unicode support", "[is unchanged]") {
+    std::stringstream input("раз раз раз два три");
+    WordCounter counter("раз");
+    while (input >> counter) {
+    }
+    REQUIRE(counter.getResult() == 3);
 }

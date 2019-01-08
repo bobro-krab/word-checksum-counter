@@ -11,14 +11,9 @@ public:
     WordCounter(std::string word_to_count);
     virtual ~WordCounter() noexcept = default;
 
-    friend std::istream& operator>>(std::istream& is, WordCounter& val);
     void processOneWordFromStream(std::istream& is);
 
-    size_t getCount() const
-    {
-        return count_;
-    }
-    unsigned int getResult() final
+    unsigned int getResult()
     {
         return static_cast<unsigned int>(count_);
     }

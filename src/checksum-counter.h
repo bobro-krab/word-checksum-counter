@@ -17,7 +17,6 @@ public:
         return static_cast<unsigned int>(result.asUnsignedInt());
     }
     virtual ~ChecksumCounter() {}
-    friend std::istream& operator>>(std::istream& is, ChecksumCounter& val);
 
 private:
     u32word result;
