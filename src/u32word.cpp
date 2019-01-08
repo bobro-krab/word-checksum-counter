@@ -1,4 +1,5 @@
 #include "u32word.h"
+
 u32word u32word::operator+(const u32word& other)
 {
     u32word result = *this;
@@ -6,11 +7,13 @@ u32word u32word::operator+(const u32word& other)
     return result;
 }
 
-bool u32word::operator ==(const u32word& other) const {
+bool u32word::operator==(const u32word& other) const
+{
     return value_.num == other.value_.num;
 }
 
-bool u32word::operator <(const u32word& other) const {
+bool u32word::operator<(const u32word& other) const
+{
     return value_.num < other.value_.num;
 }
 
@@ -18,20 +21,21 @@ std::istream& operator>>(std::istream& is, u32word& val)
 {
     unsigned int old_value = val.value_.num;
     val.value_.num = 0;
-    for (auto i = 0; i < 4; ++i) {
+    for (auto i = 0; i < word_size; ++i) {
         is.read(&val.value_.bytes[i], 1);
-        if (!is) {
-            if (is.fail() && i != 0) {
-                // restore stream only if
-                // can read at least one byte from stream
-                is.clear();
-            }
-            if (i == 0) {
-                // restore prev value only if can't read at least one byte
-                val.value_.num = old_value;
-            }
-            return is;
+        if (is) {
+            continue;
         }
+        if (is.fail() && i != 0) {
+            // restore stream only if
+            // can read at least one byte from stream
+            is.clear();
+        }
+        if (i == 0) {
+            // restore prev value only if can't read at least one byte
+            val.value_.num = old_value;
+        }
+        return is;
     }
     return is;
 }
@@ -42,6 +46,7 @@ std::ostream& operator<<(std::ostream& os, const u32word& val)
     return os;
 }
 
-unsigned int u32word::asUnsignedInt() {
+unsigned int u32word::asUnsignedInt()
+{
     return value_.num;
 }

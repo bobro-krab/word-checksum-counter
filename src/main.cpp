@@ -5,6 +5,9 @@
 
 #include "counter-builder.h"
 
+const std::string wordsParam = "words";
+const std::string checksumParam = "checksum";
+
 void printHelp(std::string programm_name)
 {
     std::cout << "Usage: " << programm_name << " <-m words|checksum> <-f filename_to_work_with> [-v]" << std::endl;
@@ -13,18 +16,6 @@ void printHelp(std::string programm_name)
     std::cout << "\tExample: " << programm_name << " -m words -v <word_you_want_to_count>"
               << "\n";
     std::cout << "2) -m checksum - Calculate checksum for specified file\n";
-}
-
-void countFile(std::string filename, Counter& counter)
-{
-    std::ifstream input(filename);
-    if (!input) {
-        std::cerr << "Error open file " << filename << ": [" << errno << "] " << strerror(errno) << std::endl;
-        return;
-    }
-    while (input >> counter) {
-    }
-    std::cout << "calculated result " << counter.getResult() << std::endl;
 }
 
 struct ProgOptions {
@@ -36,7 +27,7 @@ struct ProgOptions {
 
 ProgOptions processArgs(int argc, char** argv)
 {
-    ProgOptions result;
+    ProgOptions options;
     const char* short_options = "m:f:v:h";
     // clang-format off
     struct option long_options[] = {
@@ -56,68 +47,74 @@ ProgOptions processArgs(int argc, char** argv)
 
         switch (opt) {
         case 'm': {
-            result.mode = std::string(optarg);
+            options.mode = std::string(optarg);
             break;
         }
-
         case 'v': {
-            result.word_to_find = std::string(optarg);
+            options.word_to_find = std::string(optarg);
             break;
         }
-
         case 'f': {
-            result.filename = std::string(optarg);
+            options.filename = std::string(optarg);
             break;
         }
-
         case 'h':
             printHelp(argv[0]);
-            result.correct = false;
-            return result;
-
+            options.correct = false;
+            return options;
         case '?': // Unrecognized option
             break;
         }
     }
 
-    if (result.mode.empty()) {
+    if (options.mode.empty()) {
         std::cerr << "-m mode option is required" << std::endl;
-        result.correct = false;
+        options.correct = false;
     }
 
-    if (result.filename.empty()) {
+    if (options.filename.empty()) {
         std::cerr << "-f filename option is required" << std::endl;
-        result.correct = false;
+        options.correct = false;
     }
 
-    if ("words" == result.mode && result.word_to_find.empty()) {
+    if (wordsParam == options.mode && options.word_to_find.empty()) {
         std::cerr << "-v option shoud be specified for 'words' mode" << std::endl;
-        result.correct = false;
+        options.correct = false;
     }
 
-    if ("words" != result.mode && "checksum" == result.mode) {
+    if (wordsParam != options.mode && checksumParam == options.mode) {
         std::cerr << "-m should be 'words' or 'checksum'" << std::endl;
-        result.correct = false;
+        options.correct = false;
     }
 
-    return result;
+    return options;
+}
+
+void countFile(std::string filename, Counter& counter)
+{
+    std::ifstream input(filename);
+    if (!input) {
+        std::cerr << "Error open file " << filename << ": [" << errno << "] " << strerror(errno) << std::endl;
+        return;
+    }
+    while (input >> counter) {
+    }
+    std::cout << counter.getResult() << std::endl;
 }
 
 int main(int argc, char** argv)
 {
-    using namespace std;
-
     auto options = processArgs(argc, argv);
     if (!options.correct) {
         return EXIT_FAILURE;
     }
 
     CounterBuilder builder;
-    if (options.mode == "words") {
+    if (options.mode == wordsParam) {
         builder.countAWord(options.word_to_find);
     }
 
-    if (options.mode == "checksum") {
+    if (options.mode == checksumParam) {
         builder.countChecksumm();
     }
 

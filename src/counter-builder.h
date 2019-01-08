@@ -1,3 +1,6 @@
+#ifndef COUNTER_BUILDER_H
+#define COUNTER_BUILDER_H
+
 #include <memory>
 
 #include "counter.h"
@@ -21,11 +24,9 @@ public:
         switch(mode_) {
         case ProgramModes::words: {
             return new WordCounter(wordToCount);
-            break;
         }
         case ProgramModes::checksum: {
             return new ChecksumCounter();
-            break;
         }
         case ProgramModes::no_mode: {
             return nullptr;
@@ -37,3 +38,5 @@ private:
     std::string wordToCount = "";
     ProgramModes mode_ = ProgramModes::no_mode;
 };
+
+#endif /* COUNTER-BUILDER_H */

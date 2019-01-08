@@ -4,8 +4,8 @@
 
 class Counter {
 public:
-    virtual unsigned int getResult() = 0;
     virtual ~Counter() {}
+    virtual unsigned int getResult() = 0;
     virtual void processOneWordFromStream(std::istream& is) = 0;
     friend std::istream& operator>>(std::istream& is, Counter& val);
 };

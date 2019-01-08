@@ -5,6 +5,7 @@
 #include <string>
 
 #include "counter.h"
+
 class WordCounter: public Counter
 {
 public:
@@ -20,7 +21,6 @@ public:
     unsigned int getResult() final {
         return static_cast<unsigned int>(count_);
     }
-protected:
 private:
     size_t count_ = 0;
     std::string word_;

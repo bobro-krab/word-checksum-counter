@@ -3,8 +3,10 @@
 
 #include <iostream>
 
+const unsigned int word_size = 4;
+
 typedef union {
-    char bytes[4];
+    char bytes[word_size];
     unsigned int num = 0;
 } DataHolder;
 
@@ -25,8 +27,6 @@ public:
 
     unsigned int asUnsignedInt();
 
-
-protected:
 private:
     DataHolder value_;
 };

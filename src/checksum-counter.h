@@ -1,3 +1,7 @@
+#ifndef CHECKSUM_COUNTER_H
+#define CHECKSUM_COUNTER_H
+
+
 #include <iostream>
 #include <fstream>
 #include "counter.h"
@@ -18,3 +22,4 @@ private:
     u32word result;
 };
 
+#endif /* CHECKSUM_COUNTER_H */
