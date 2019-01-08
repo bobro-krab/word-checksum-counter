@@ -1,6 +1,7 @@
 #include "checksum-counter.h"
 
-std::istream& operator >>(std::istream& is, ChecksumCounter& val) {
+std::istream& operator>>(std::istream& is, ChecksumCounter& val)
+{
     u32word e;
     is >> e;
     if (is) {
@@ -9,7 +10,8 @@ std::istream& operator >>(std::istream& is, ChecksumCounter& val) {
     return is;
 }
 
-void ChecksumCounter::processOneWordFromStream(std::istream& is) {
+void ChecksumCounter::processOneWordFromStream(std::istream& is)
+{
     u32word e;
     is >> e;
     if (is) {

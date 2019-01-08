@@ -17,7 +17,8 @@ std::istream& operator>>(std::istream& is, WordCounter& val)
     return is;
 }
 
-void WordCounter::processOneWordFromStream(std::istream& is) {
+void WordCounter::processOneWordFromStream(std::istream& is)
+{
     std::string word;
     is >> word;
     if (!is) {

@@ -1,23 +1,24 @@
 #ifndef CHECKSUM_COUNTER_H
 #define CHECKSUM_COUNTER_H
 
-
-#include <iostream>
-#include <fstream>
 #include "counter.h"
 #include "u32word.h"
+#include <fstream>
+#include <iostream>
 
-class ChecksumCounter: public Counter
-{
+class ChecksumCounter : public Counter {
 public:
-    ChecksumCounter() {
+    ChecksumCounter()
+    {
     }
     void processOneWordFromStream(std::istream& is);
-    unsigned int getResult() final {
+    unsigned int getResult() final
+    {
         return static_cast<unsigned int>(result.asUnsignedInt());
     }
     virtual ~ChecksumCounter() {}
     friend std::istream& operator>>(std::istream& is, ChecksumCounter& val);
+
 private:
     u32word result;
 };

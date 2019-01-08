@@ -21,7 +21,7 @@ public:
 
     u32word operator+(const u32word& other);
     bool operator==(const u32word& other) const;
-    bool operator <(const u32word& other) const;
+    bool operator<(const u32word& other) const;
     friend std::istream& operator>>(std::istream& is, u32word& val);
     friend std::ostream& operator<<(std::ostream& os, const u32word& val);
 
@@ -30,6 +30,5 @@ public:
 private:
     DataHolder value_;
 };
-
 
 #endif /* U32WORD_H */
