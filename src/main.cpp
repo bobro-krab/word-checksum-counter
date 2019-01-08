@@ -10,12 +10,21 @@ const std::string checksumParam = "checksum";
 
 void printHelp(std::string programm_name)
 {
-    std::cout << "Usage: " << programm_name << " <-m words|checksum> <-f filename_to_work_with> [-v]" << std::endl;
-    std::cout << "This program can work in 2 modes:\n";
-    std::cout << "1) -m words - Count words in selected file.\n";
-    std::cout << "\tExample: " << programm_name << " -m words -v <word_you_want_to_count>"
-              << "\n";
-    std::cout << "2) -m checksum - Calculate checksum for specified file\n";
+    std::cout << "Usage: " << programm_name << " <-m words|checksum> <-f filename_to_work_with> [-v word_to_find] [-h]" << std::endl;
+    std::cout << R"in(
+This program can count something. It can be word count, or it can be checksum.
+
+In 'words' mode program count words in file and print it. Word must be specified with -v argument.
+In 'checksum' mode program calculate checksum of specified with this algorithm:
+
+    summ = word1 + word2 + ... wordN, where word is 32bits long binary word
+
+Command line args:
+    -m, --mode        one of two modes: 'checksum' or 'words'
+    -f, --filename    filename to count checksum or word
+    -v, --findword    word to search for
+    -h, --help        show this help
+)in" << std::endl;
 }
 
 struct ProgOptions {
