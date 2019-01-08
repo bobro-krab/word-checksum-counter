@@ -2,7 +2,10 @@
 
 Программа умеет посчитывать количество слов в файле с учетом некоторых знаков препинания.
 Так же программа позволяет посчитать 32-х битную чексумму файла по алгоритму:
+
+```
 checksum = word1 + word2 + … + wordN (word1..wordN – 32-хбитные слова, представляющие содержимое файла)
+```
 
 # Установка #
 
@@ -21,6 +24,9 @@ cmake --build build
 # Запуск #
 
 ```shell
-./build/prog -m <mode> -f <filename> [-v <word to find>] [-h]
-
+./build/prog -h
+# or
+./build/prog -f ~/test.txt -m words -v hello
+# or
+./build/prog -f test.txt -m checksum
 ```
